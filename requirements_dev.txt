@@ -1,0 +1,1 @@
+flask-migrate==2.7.0
