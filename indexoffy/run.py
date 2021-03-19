@@ -10,4 +10,7 @@ def nao_entre_em_panico():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='localhost', port=port, debug=True)
+    debug = os.environ.get("DEBUG", False)
+    host = os.environ.get("HOST", "0.0.0.0")
+    
+    app.run(host=host, port=port, debug=debug)
