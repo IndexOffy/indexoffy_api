@@ -7,7 +7,8 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Define the database - we are working with
 # SQLite for this example
-SQLALCHEMY_DATABASE_URI = 'mysql://u141500443_indexoffy_app:indexoffy@App123@31.170.166.166/u141500443_indexoffy_app'
+
+SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
 DATABASE_CONNECT_OPTIONS = {}
 
 # Application threads. A common general assumption is
