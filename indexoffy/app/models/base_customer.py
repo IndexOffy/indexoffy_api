@@ -11,7 +11,7 @@ class Base(db.Model):
     date_created  = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-# Define a ApiToken model
+# Define a BaseCustomer model
 class BaseCustomer(Base):
 
     __tablename__ = 'base_customer'
@@ -30,4 +30,4 @@ class BaseCustomer(Base):
         self.status     = status
 
     def __repr__(self):
-        return '<ApiToken %r>' % (self.name)
+        return '<id %r>' % (self.id)
