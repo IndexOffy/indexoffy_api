@@ -19,13 +19,14 @@ class ApiToken(Base):
     base_customer = db.Column(db.String(128), nullable=False)
     api_token = db.Column(db.String(256), nullable=False,unique=True)
     status = db.Column(db.SmallInteger, nullable=False)
+    api_type = db.Column(db.String(128), nullable=False)
 
     # New instance instantiation procedure
-    def __init__(self, name, email, password):
+    def __init__(self, base_customer, api_token, status):
 
         self.base_customer  = base_customer
         self.api_token      = api_token
         self.status         = status
 
     def __repr__(self):
-        return '<ApiToken %r>' % (self.api_token)
+        return '<id %r>' % (self.id)
