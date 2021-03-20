@@ -5,7 +5,6 @@ from flask_swagger_ui import get_swaggerui_blueprint
 # Import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_alembic import Alembic
 
 # Define the WSGI application object
 app = Flask(__name__)
