@@ -1,4 +1,4 @@
-# indexoffy-app
+# indexoffy-api
 
 <a href ="#" target="_blank"><img src="docs/indexoffy_api.jpg"></a>
 
