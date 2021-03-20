@@ -11,22 +11,23 @@ class Base(db.Model):
     date_created  = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-# Define a ApiToken model
-class ApiToken(Base):
+# Define a BaseCustomer model
+class BaseCustomer(Base):
 
-    __tablename__ = 'api_token'
+    __tablename__ = 'base_customer'
 
-    base_customer = db.Column(db.String(128), nullable=False)
-    api_token = db.Column(db.String(256), nullable=False,unique=True)
+    name = db.Column(db.String(256), nullable=False)
+    email = db.Column(db.String(128),  nullable=False, unique=True)
+    password = db.Column(db.String(192),  nullable=False)
     status = db.Column(db.SmallInteger, nullable=False)
-    api_type = db.Column(db.String(128), nullable=False)
 
     # New instance instantiation procedure
-    def __init__(self, base_customer, api_token, status):
+    def __init__(self, name, email, password, status):
 
-        self.base_customer  = base_customer
-        self.api_token      = api_token
-        self.status         = status
+        self.name       = name
+        self.email      = email
+        self.password   = password
+        self.status     = status
 
     def __repr__(self):
         return '<id %r>' % (self.id)
