@@ -19,16 +19,18 @@ class ApiUser(Base):
     name = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(256),  nullable=False)
     code = db.Column(db.String(256),  nullable=False)
-    level = db.Column(db.String(256),  nullable=False)
+    score = db.Column(db.String(256),  nullable=False)
     date = db.Column(db.String(256),  nullable=False)
     status = db.Column(db.Date, nullable=False)
 
     # New instance instantiation procedure
-    def __init__(self, name, email, code, status):
+    def __init__(self, name, email, code, score, date, status):
 
         self.name       = name
         self.email      = email
         self.code       = code
+        self.score      = score
+        self.date       = date
         self.status     = status
 
     def __repr__(self):
