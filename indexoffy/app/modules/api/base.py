@@ -28,12 +28,40 @@ class BaseApi(object):
             except:
                 return jsonify({'message': 'token is invalid', 'data': {}}), 401
 
-            data =  {
-                "base_customer": query_token.base_customer,
-                "args": request.args.__dict__,
-                "params": request.__dict__['view_args']
-            }
-            return f(data, *args, **kwargs)
+            if query_token:
+                data =  {
+                    "args": request.__dict__['view_args'],
+                    "base_customer": query_token.base_customer,
+                    "params": request.args
+                }
+                return f(data, *args, **kwargs)
+        
+        return decorated
+
+    def validate_token_admin(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            access_token = request.headers.get('access_token')
+            if not access_token:
+                return jsonify({'message': 'token is missing', 'data': {}}), 401
+            try:
+                query_token = BaseToken.query.filter(
+                    BaseToken.api_token == access_token,
+                    BaseToken.status == True,
+                    BaseToken.api_type == 0
+                ).first()
+            except:
+                return jsonify({'message': 'token is invalid', 'data': {}}), 401
+
+            if query_token:
+                data =  {
+                    "base_customer": query_token.base_customer,
+                    "args": request.args.__dict__,
+                    "params": request.__dict__['view_args']
+                }
+                return f(data, *args, **kwargs)
+            
+            return jsonify({'message': 'permission denied', 'data': {}}), 401
         
         return decorated
 
