@@ -1,23 +1,25 @@
 # coding=utf-8
 
-import json
-
-from app.models.base_token import BaseToken
 from flask import jsonify, request
 from functools import wraps
+
+from app.models.base_token import BaseToken
+from app.modules.api.utils.responses import BaseResponse
+
+
 class BaseApi(object):
     """ Base View to create helpers common to all Webservices.
     """
     def __init__(self, request):
         """Constructor
         """
-        self.request = request
-        self.api_token = request.args.get('token')
+        self.api_token = request.headers.get('access_token')
 
     def validate_token(f):
         @wraps(f)
         def decorated(*args, **kwargs):
             access_token = request.headers.get('access_token')
+
             if not access_token:
                 return jsonify({'message': 'token is missing', 'data': {}}), 401
             try:
@@ -42,6 +44,7 @@ class BaseApi(object):
         @wraps(f)
         def decorated(*args, **kwargs):
             access_token = request.headers.get('access_token')
+
             if not access_token:
                 return jsonify({'message': 'token is missing', 'data': {}}), 401
             try:
