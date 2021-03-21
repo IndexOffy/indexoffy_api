@@ -16,8 +16,11 @@ class ViewUser(BaseApi):
         users = User.query.all()
 
         if users:
-            result = users_schema.dump(users)
-            return jsonify({"message": "successfully fetched", "data": result}), 201
+            try:
+                result = users_schema.dump(users)
+                return jsonify({"message": "successfully fetched", "data": result}), 201
+            except:
+                return 500
 
         return jsonify({"message": "user don't exist", "data":{}}), 404
 
@@ -26,7 +29,10 @@ class ViewUser(BaseApi):
         user = User.query.filter(User.code == code).first()
 
         if user:
-            result = user_schema.dump(user)
-            return jsonify({"message": "successfully fetched", "data": result}), 201
+            try:
+                result = user_schema.dump(user)
+                return jsonify({"message": "successfully fetched", "data": result}), 201
+            except:
+                return 500
 
         return jsonify({"message": "user don't exist", "data":{}}), 404
