@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 # Define the WSGI application object
 app = Flask(__name__)
 
-SWAGGER_URL = '/doc'
+SWAGGER_URL = '/docs'
 API_URL = '/static/swagger.json'
 SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
     SWAGGER_URL,
@@ -36,12 +36,12 @@ def not_found(error):
     return render_template('404.html'), 404
 
 # Import a module / component using its blueprint handler variable (mod_auth)
-from app.modules.api.controllers import mod_api as api
+from app.modules.api_doc.controllers import mod_doc as doc
 from app.modules.api_user.controllers import mod_user as user
 
 # Register blueprint(s)
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
-app.register_blueprint(api)
+app.register_blueprint(doc)
 app.register_blueprint(user)
 
 from app.models.user import User
