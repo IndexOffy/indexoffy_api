@@ -19,7 +19,7 @@ class ViewUser(BaseApi):
                 result = users_schema.dump(users)
             return jsonify({"message": "successfully fetched", "data": result}), 201
         except:
-            return 500
+            return jsonify({"message": "error", "data":{}}), 500
         
         return jsonify({"message": "user don't exist", "data":{}}), 404
 
@@ -31,6 +31,6 @@ class ViewUser(BaseApi):
                 result = user_schema.dump(user)
                 return jsonify({"message": "successfully fetched", "data": result}), 201
         except:
-            return 500
+            return jsonify({"message": "error", "data":{}}), 500
 
         return jsonify({"message": "user don't exist", "data":{}}), 404
