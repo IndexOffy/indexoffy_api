@@ -11,23 +11,27 @@ class Base(db.Model):
     date_created  = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-# Define a BaseCustomer model
-class BaseCustomer(Base):
+# Define a BaseLog model
+class BaseLog(Base):
 
-    __tablename__ = 'base_customer'
+    __tablename__ = 'base_log'
 
-    name = db.Column(db.String(256), nullable=False)
-    email = db.Column(db.String(128),  nullable=False, unique=True)
-    password = db.Column(db.String(192),  nullable=False)
-    status = db.Column(db.SmallInteger, nullable=False)
+    base_customer = db.Column(db.String(256), nullable=False)
+    user_name = db.Column(db.String(100),  nullable=False)
+    user_email = db.Column(db.String(100),  nullable=False)
+    operation = db.Column(db.String(10),  nullable=False)
+    model_class = db.Column(db.String(50),  nullable=False)
+    model_id = db.Column(db.String(50),  nullable=False)
 
     # New instance instantiation procedure
-    def __init__(self, name, email, password, status):
+    def __init__(self, base_customer, user_name, user_email, operation, model_class, model_id):
 
-        self.name       = name
-        self.email      = email
-        self.password   = password
-        self.status     = status
+        self.base_customer = base_customer
+        self.user_name     = user_name
+        self.user_email    = user_email
+        self.operation     = operation
+        self.model_class   = model_class
+        self.model_id      = model_id
 
     def __repr__(self):
         return '<id %r>' % (self.id)
