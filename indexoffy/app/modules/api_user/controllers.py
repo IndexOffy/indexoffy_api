@@ -13,7 +13,21 @@ class ViewUser(BaseApi):
 
     @mod_user.route('/', methods=['GET'])
     @BaseApi.validate_token
-    def get_users(data):
+    def get_user_code(data):
+        print(data)
+        try:
+            user = User.query.filter(User.code == data['params'].get('code')).first()
+            if user:
+                result = user_schema.dump(user)
+                return jsonify({"message": "successfully fetched", "data": result}), 201
+        except:
+            return jsonify({"message": "error", "data":{}}), 500
+
+        return jsonify({"message": "user don't exist", "data":{}}), 404
+
+    @mod_user.route('/all', methods=['GET'])
+    @BaseApi.validate_token_admin
+    def get_all(data):
         try:
             users = User.query.all()
             if users:
@@ -25,10 +39,10 @@ class ViewUser(BaseApi):
         return jsonify({"message": "user don't exist", "data":{}}), 404
 
     @mod_user.route('/<id>', methods=['GET'])
-    @BaseApi.validate_token
-    def get_user_code(data, *args, **kwargs):
+    @BaseApi.validate_token_admin
+    def get_user(data, *args, **kwargs):
         try:
-            user = User.query.filter(User.code == data['params']['id']).first()
+            user = User.query.filter(User.id == data['params']['id']).first()
             if user:
                 result = user_schema.dump(user)
                 return jsonify({"message": "successfully fetched", "data": result}), 201
