@@ -12,7 +12,8 @@ mod_user = Blueprint('users', __name__, url_prefix='/users')
 class ViewUser(BaseApi):
 
     @mod_user.route('/', methods=['GET'])
-    def get_users():
+    @BaseApi.validate_token
+    def get_users(data):
         try:
             users = User.query.all()
             if users:
@@ -23,10 +24,10 @@ class ViewUser(BaseApi):
         
         return jsonify({"message": "user don't exist", "data":{}}), 404
 
-    @mod_user.route('/<code>', methods=['GET'])
-    def get_user_code(code):
+    @mod_user.route('/<id>', methods=['GET'])
+    def get_user_code(self, id):
         try:
-            user = User.query.filter(User.code == code).first()
+            user = User.query.filter(User.code == id).first()
             if user:
                 result = user_schema.dump(user)
                 return jsonify({"message": "successfully fetched", "data": result}), 201
