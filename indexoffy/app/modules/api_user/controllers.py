@@ -19,7 +19,7 @@ class ViewUser(BaseApi):
             user = User.query.filter(User.code == data['params'].get('code')).first()
             if user:
                 result = user_schema.dump(user)
-                return jsonify({"message": "successfully fetched", "data": result}), 201
+                return jsonify({"message": "successfully fetched", "data": result}), 200
         except:
             return jsonify({"message": "error", "data":{}}), 500
 
@@ -32,7 +32,7 @@ class ViewUser(BaseApi):
             users = User.query.all()
             if users:
                 result = users_schema.dump(users)
-            return jsonify({"message": "successfully fetched", "data": result}), 201
+            return jsonify({"message": "successfully fetched", "data": result}), 200
         except:
             return jsonify({"message": "error", "data":{}}), 500
         
@@ -45,7 +45,7 @@ class ViewUser(BaseApi):
             user = User.query.filter(User.id == data['params']['id']).first()
             if user:
                 result = user_schema.dump(user)
-                return jsonify({"message": "successfully fetched", "data": result}), 201
+                return jsonify({"message": "successfully fetched", "data": result}), 200
         except:
             return jsonify({"message": "error", "data":{}}), 500
 
