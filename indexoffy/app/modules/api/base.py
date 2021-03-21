@@ -1,34 +1,34 @@
 # coding=utf-8
-"""
-Base View to create helpers common to all Webservices.
-"""
 
+from app.models.base_token import BaseToken
+from flask import jsonify, request
+from functools import wraps
 class BaseApi(object):
-    """Main Class.
+    """ Base View to create helpers common to all Webservices.
     """
     def __init__(self, request):
         """Constructor
         """
         self.request = request
-
-        api_token = self.validate_token()
-
-        # valid token
-        self.token = api_token.token
-        self.base_customer = api_token.base_customer
+        self.api_token = request.args.get('token')
 
     def validate_token(self):
-        """
-        Validate Token in HTTP Header
-        """
-        # API token header
-
-        from pdb import set_trace; set_trace()
-
-        header = 'offy-token'
-        token = self.request.headers.get(header)
-
-        pass
+        @wraps(self)
+        def decorated(*args, **kwargs):
+            token = request.args.get('token')
+            if not token:
+                return jsonify({'message': 'token is missing', 'data': {}}), 401
+            try:
+                data = BaseToken.query.filter(
+                    BaseToken.api_token == token,
+                    BaseToken.status == True,
+                    BaseToken.api_type == 1
+                ).first()
+            except:
+                return jsonify({'message': 'token is invalid', 'data': {}}), 401
+            return self(data, *args, **kwargs)
+        
+        return decorated
 
     def get(self):
         pass
