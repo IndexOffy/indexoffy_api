@@ -13,26 +13,24 @@ class ViewUser(BaseApi):
 
     @mod_user.route('/', methods=['GET'])
     def get_users():
-        users = User.query.all()
-
-        if users:
-            try:
+        try:
+            users = User.query.all()
+            if users:
                 result = users_schema.dump(users)
-                return jsonify({"message": "successfully fetched", "data": result}), 201
-            except:
-                return 500
-
+            return jsonify({"message": "successfully fetched", "data": result}), 201
+        except:
+            return 500
+        
         return jsonify({"message": "user don't exist", "data":{}}), 404
 
     @mod_user.route('/<code>', methods=['GET'])
     def get_user_code(code):
-        user = User.query.filter(User.code == code).first()
-
-        if user:
-            try:
+        try:
+            user = User.query.filter(User.code == code).first()
+            if user:
                 result = user_schema.dump(user)
                 return jsonify({"message": "successfully fetched", "data": result}), 201
-            except:
-                return 500
+        except:
+            return 500
 
         return jsonify({"message": "user don't exist", "data":{}}), 404
