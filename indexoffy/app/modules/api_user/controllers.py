@@ -25,9 +25,10 @@ class ViewUser(BaseApi):
         return jsonify({"message": "user don't exist", "data":{}}), 404
 
     @mod_user.route('/<id>', methods=['GET'])
-    def get_user_code(self, id):
+    @BaseApi.validate_token
+    def get_user_code(data, *args, **kwargs):
         try:
-            user = User.query.filter(User.code == id).first()
+            user = User.query.filter(User.code == data['params']['id']).first()
             if user:
                 result = user_schema.dump(user)
                 return jsonify({"message": "successfully fetched", "data": result}), 201
