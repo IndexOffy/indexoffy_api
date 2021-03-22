@@ -48,6 +48,7 @@ from app.models.user import User
 from app.models.base_customer import BaseCustomer
 from app.models.base_token import BaseToken
 from app.models.base_log import BaseLog
+from app.models.base_error import BaseError
 
 # Build the database:
 # This will create the database file using SQLAlchemy
