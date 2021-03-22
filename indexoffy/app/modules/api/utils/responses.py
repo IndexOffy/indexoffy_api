@@ -48,8 +48,9 @@ class BaseResponse(object):
             base_log = BaseLog(**self.base_log_data)
             db.session.add(base_log)
             db.session.commit()
-        except:
-            pass
+        except Exception as error:
+            print(error)
+
         return jsonify({"message": "successfully fetched", "data": result}), status
     
     def server_error(self, result=None):
@@ -64,8 +65,9 @@ class BaseResponse(object):
             base_log = BaseLog(**self.base_log_data)
             db.session.add(base_log)
             db.session.commit()
-        except:
-            pass
+        except Exception as error:
+            print(error)
+
         return jsonify({"message": "error", "data":{}}), status
 
     def user_dont_exist(self, result=None):
@@ -80,8 +82,9 @@ class BaseResponse(object):
             base_log = BaseLog(**self.base_log_data)
             db.session.add(base_log)
             db.session.commit()
-        except:
-            pass
+        except Exception as error:
+            print(error)
+
         return jsonify({"message": "user don't exist", "data":{}}), status
 
     def token_is_missing(self, result=None):
@@ -96,8 +99,9 @@ class BaseResponse(object):
             base_log = BaseLog(**self.base_log_data)
             db.session.add(base_log)
             db.session.commit()
-        except:
-            pass
+        except Exception as error:
+            print(error)
+
         return jsonify({'message': 'token is missing', 'data': {}}), status
 
     def token_is_invalid(self, result=None):
@@ -112,8 +116,9 @@ class BaseResponse(object):
             base_log = BaseLog(**self.base_log_data)
             db.session.add(base_log)
             db.session.commit()
-        except:
-            pass
+        except Exception as error:
+            print(error)
+
         return jsonify({'message': 'token is invalid', 'data': {}}), status
 
     def permission_denied(self, result=None):
@@ -128,6 +133,7 @@ class BaseResponse(object):
             base_log = BaseLog(**self.base_log_data)
             db.session.add(base_log)
             db.session.commit()
-        except:
-            pass
+        except Exception as error:
+            print(error)
+
         return jsonify({'message': 'permission denied', 'data': {}}), status
