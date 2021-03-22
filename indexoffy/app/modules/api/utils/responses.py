@@ -36,6 +36,8 @@ class BaseResponse(object):
                 "model_id": 0,
                 "params": str(data['params']),
                 "args":  str(data['args']),
+                "api_token": None,
+                "ip_address": None
             }
 
     def successfully_fetched(self, result=None):
