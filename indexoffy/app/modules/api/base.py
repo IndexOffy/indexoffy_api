@@ -90,8 +90,8 @@ class BaseApi(object):
                     "params": request.args
                 }
                 return f(data, *args, **kwargs)
-            
-            return jsonify({'message': 'permission denied', 'data': {}}), 401
+
+            return response.permission_denied() 
         
         return decorated
 

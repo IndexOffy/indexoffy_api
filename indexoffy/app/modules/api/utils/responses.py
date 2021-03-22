@@ -115,3 +115,19 @@ class BaseResponse(object):
         except:
             pass
         return jsonify({'message': 'token is invalid', 'data': {}}), status
+
+    def permission_denied(self, result=None):
+        """ 
+        """
+        status = 401
+        try:
+            self.base_log_data["message"] = "permission_denied"
+            self.base_log_data["status"] = status
+            self.base_log_data["result"] = str(result)
+
+            base_log = BaseLog(**self.base_log_data)
+            db.session.add(base_log)
+            db.session.commit()
+        except:
+            pass
+        return jsonify({'message': 'permission denied', 'data': {}}), status
