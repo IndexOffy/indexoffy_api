@@ -23,6 +23,8 @@ class BaseResponse(object):
                 "model_id": 0,
                 "params": str({}),
                 "args":  str({}),
+                "api_token": None,
+                "ip_address": None
             }
         else:
             self.base_log_data = {
