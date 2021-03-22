@@ -24,7 +24,8 @@ class BaseApi(object):
 
             response = BaseResponse(
                 token=access_token,
-                model_class="validate_token",
+                model_class=str(__name__),
+                function="validate_token",
                 operation=str(['GET'])
             )
 
@@ -62,7 +63,8 @@ class BaseApi(object):
 
             response = BaseResponse(
                 token=access_token,
-                model_class="validate_token_admin",
+                model_class=str(__name__),
+                function="validate_token_admin",
                 operation=str(['GET'])
             )
 

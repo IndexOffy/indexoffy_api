@@ -21,7 +21,8 @@ class ViewUser(BaseApi):
         """
         response = BaseResponse(
             data=data,
-            model_class="get_user",
+            model_class=str(__name__),
+            function="get_user",
             operation=str(['GET'])
         )
         try:
@@ -41,7 +42,8 @@ class ViewUser(BaseApi):
         """
         response = BaseResponse(
             data=data,
-            model_class="get_all_admin",
+            model_class=str(__name__),
+            function="get_all_admin",
             operation=str(['GET'])
         )
         try:
@@ -61,7 +63,8 @@ class ViewUser(BaseApi):
         """
         response = BaseResponse(
             data=data,
-            model_class="get_user_admin",
+            model_class=str(__name__),
+            function="get_user_admin",
             operation=str(['GET'])
         )
         try:

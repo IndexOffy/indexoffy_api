@@ -10,7 +10,7 @@ from app.models.base_log import BaseLog
 class BaseResponse(object):
     """ Base View to create helpers common to all Webservices.
     """
-    def __init__(self, token=None, data=None, model_class="model_class", operation="Error"):
+    def __init__(self, token=None, data=None, model_class="model_class", function="function", operation="Error"):
         """Constructor
         """
         if not data:
@@ -20,6 +20,7 @@ class BaseResponse(object):
                 "user_email": "No email",
                 "operation": operation,
                 "model_class": model_class,
+                "function": function,
                 "model_id": 0,
                 "params": str({}),
                 "args":  str({}),
@@ -33,6 +34,7 @@ class BaseResponse(object):
                 "user_email": data['user'].email,
                 "operation": operation,
                 "model_class": model_class,
+                "function": function,
                 "model_id": 0,
                 "params": str(data['params']),
                 "args":  str(data['args']),
