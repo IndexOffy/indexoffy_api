@@ -17,11 +17,18 @@ class ViewUser(BaseApi):
     @mod_user.route('/', methods=['GET'])
     @BaseApi.validate_token
     def get_user(data):
+        """
+        """
+        response = BaseResponse(
+            data=data,
+            model_class="get_user",
+            operation=str(['GET'])
+        )
         try:
             user = User.query.filter(User.code == data['params'].get('code')).first()
             if user:
                 result = user_schema.dump(user)
-                BaseResponse().successfully_fetched(result, data)
+                return response.successfully_fetched(result=result)
         except:
             return BaseResponse().server_error()
 
@@ -30,11 +37,18 @@ class ViewUser(BaseApi):
     @mod_user.route('/all', methods=['GET'])
     @BaseApi.validate_token_admin
     def get_all_admin(data):
+        """
+        """
+        response = BaseResponse(
+            data=data,
+            model_class="get_all_admin",
+            operation=str(['GET'])
+        )
         try:
             users = User.query.all()
             if users:
                 result = users_schema.dump(users)
-            BaseResponse().successfully_fetched(result)
+                return response.successfully_fetched(result=result)
         except:
             return BaseResponse().server_error()
         
@@ -43,11 +57,18 @@ class ViewUser(BaseApi):
     @mod_user.route('/<id>', methods=['GET'])
     @BaseApi.validate_token_admin
     def get_user_admin(data, *args, **kwargs):
+        """
+        """
+        response = BaseResponse(
+            data=data,
+            model_class="get_user_admin",
+            operation=str(['GET'])
+        )
         try:
-            user = User.query.filter(User.id == data['params']['id']).first()
+            user = User.query.filter(User.id == data['args']['id']).first()
             if user:
                 result = user_schema.dump(user)
-                BaseResponse().successfully_fetched(result)
+                return response.successfully_fetched(result=result)
         except:
             return BaseResponse().server_error()
 
