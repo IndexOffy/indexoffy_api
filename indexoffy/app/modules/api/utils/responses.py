@@ -8,7 +8,7 @@ from app.models.base_log import BaseLog
 
 
 class BaseResponse(object):
-    """ Base View to create helpers common to all Webservices.
+    """ Base View to Response common to all Webservices.
     """
     def __init__(self, token=None, data=None, model_class="model_class", function="function", operation="Error"):
         """Constructor
