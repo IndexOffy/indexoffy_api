@@ -19,10 +19,10 @@ class BaseLog(Base):
     base_customer = db.Column(db.Integer, nullable=False)
     user_name = db.Column(db.String(100), nullable=True)
     user_email = db.Column(db.String(100), nullable=True)
-    operation = db.Column(db.String(10), nullable=False)
-    model_class = db.Column(db.String(50), nullable=False)
-    function = db.Column(db.String(50), nullable=False)
-    model_id = db.Column(db.Integer, nullable=False)
+    operation = db.Column(db.String(10), nullable=True)
+    model_class = db.Column(db.String(50), nullable=True)
+    function = db.Column(db.String(50), nullable=True)
+    model_id = db.Column(db.Integer, nullable=True)
     params = db.Column(db.String(256), nullable=True)
     args = db.Column(db.String(256), nullable=True)
     result = db.Column(db.String(256), nullable=True)
@@ -30,6 +30,7 @@ class BaseLog(Base):
     status = db.Column(db.Integer, nullable=True)
     api_token = db.Column(db.String(100), nullable=True)
     ip_address = db.Column(db.Integer, nullable=True)
+    route = db.Column(db.String(100), nullable=True)
 
     # New instance instantiation procedure
     def __init__(self,
@@ -46,7 +47,8 @@ class BaseLog(Base):
         message,
         status,
         api_token,
-        ip_address
+        ip_address,
+        route
     ):
 
         self.base_customer = base_customer
@@ -63,6 +65,7 @@ class BaseLog(Base):
         self.status        = status
         self.api_token     = api_token
         self.ip_address    = ip_address
+        self.route         = route
 
     def __repr__(self):
         return '<id %r>' % (self.id)
