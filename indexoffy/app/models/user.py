@@ -35,6 +35,8 @@ class User(Base):
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'email', 'code', 'score', 'date')
+        
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
+fields_list = ['id', 'name', 'email', 'code', 'score', 'date']
