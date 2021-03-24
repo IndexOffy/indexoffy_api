@@ -26,41 +26,4 @@ class ViewUser(object):
     @mod_user.route('/all', methods=['GET'])
     @BaseDecorator.validate_token_admin
     def get_all_admin(data):
-        """
-        """
-        response = BaseResponse(
-            data=data,
-            model_class=str(__name__),
-            function="get_all_admin",
-            operation=str(['GET'])
-        )
-        try:
-            users = User.query.all()
-            if users:
-                result = users_schema.dump(users)
-                return response.successfully_fetched(result=result)
-        except:
-            return BaseResponse().server_error()
-        
-        return BaseResponse().user_dont_exist()
-
-    @mod_user.route('/<id>', methods=['GET'])
-    @BaseDecorator.validate_token_admin
-    def get_user_admin(data, *args, **kwargs):
-        """
-        """
-        response = BaseResponse(
-            data=data,
-            model_class=str(__name__),
-            function="get_user_admin",
-            operation=str(['GET'])
-        )
-        try:
-            user = User.query.filter(User.id == data['args']['id']).first()
-            if user:
-                result = user_schema.dump(user)
-                return response.successfully_fetched(result=result)
-        except:
-            return BaseResponse().server_error()
-
-        return BaseResponse().user_dont_exist()
+        return ControlerUser(data=data).get_all()
