@@ -41,7 +41,7 @@ class ControlerUser(BaseApi):
             
             if users:
                 result = users_schema.dump(users)
-                return self.response.successfully_fetched(result=result)
+                return self.response.successfully_fetched(result=result, params=self.params)
         except:
             return BaseResponse().server_error()
         
@@ -58,7 +58,7 @@ class ControlerUser(BaseApi):
 
             if user:
                 result = user_schema.dump(user)
-                return self.response.successfully_fetched(result=result,params=self.params)
+                return self.response.successfully_fetched(result=result, params=self.params)
         except:
             return BaseResponse().server_error()
 
