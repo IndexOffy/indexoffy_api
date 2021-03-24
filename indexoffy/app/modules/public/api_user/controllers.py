@@ -19,6 +19,8 @@ class ControlerUser(BaseApi):
         )
 
         self.params = {}
+
+        # api_type 0 = Admin / api_type 1 = User
         fields = fields_list if data['user'].api_type == 1 else fields_list_admin
         try:
             for item in fields:
