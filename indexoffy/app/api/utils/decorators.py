@@ -51,6 +51,8 @@ class BaseDecorator(object):
                     "user": query_user,
                 }
                 return f(data, *args, **kwargs)
+
+            return response.permission_denied()
         
         return decorated
 
