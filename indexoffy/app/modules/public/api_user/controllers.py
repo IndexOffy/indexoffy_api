@@ -43,9 +43,9 @@ class ControlerUser(BaseApi):
                 result = users_schema.dump(users)
                 return self.response.successfully_fetched(result=result, params=self.params)
         except:
-            return BaseResponse().server_error()
+            return self.response.server_error(params=self.params)
         
-        return BaseResponse().user_dont_exist()
+        return self.response.user_dont_exist(params=self.params)
 
     def get(self):
         """
@@ -60,9 +60,9 @@ class ControlerUser(BaseApi):
                 result = user_schema.dump(user)
                 return self.response.successfully_fetched(result=result, params=self.params)
         except:
-            return BaseResponse().server_error()
+            return self.response.server_error(params=self.params)
 
-        return BaseResponse().user_dont_exist()
+        return self.response.user_dont_exist(params=self.params)
 
     def post(self):
         pass
