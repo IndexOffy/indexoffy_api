@@ -32,6 +32,7 @@ class BaseDecorator(object):
             try:
                 query_user = db.session.query(
                         BaseToken.id.label('token_id'),
+                        BaseToken.api_type.label('api_type'),
                         BaseCustomer.id.label('base_customer'),
                         BaseCustomer.name.label('name'),
                         BaseCustomer.email.label('email')
@@ -59,10 +60,8 @@ class BaseDecorator(object):
             access_token = request.headers.get('access_token')
 
             response = BaseResponse(
-                token=access_token,
                 model_class=str(__name__),
                 function="validate_token_admin",
-                operation=str(['GET'])
             )
 
             if not access_token:
@@ -70,6 +69,7 @@ class BaseDecorator(object):
             try:
                 query_user = db.session.query(
                         BaseToken.id.label('token_id'),
+                        BaseToken.api_type.label('api_type'),
                         BaseCustomer.id.label('base_customer'),
                         BaseCustomer.name.label('name'),
                         BaseCustomer.email.label('email')
@@ -77,7 +77,8 @@ class BaseDecorator(object):
                     .join(BaseCustomer, BaseToken.base_customer==BaseCustomer.id) \
                     .filter(
                         BaseToken.api_token == access_token,
-                        BaseToken.status == True
+                        BaseToken.status == True,
+                        BaseToken.api_type == 0
                     ).first()
             except:
                 return response.token_is_invalid()
