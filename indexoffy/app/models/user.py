@@ -39,4 +39,5 @@ class UserSchema(ma.Schema):
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
-fields_list = ['id', 'name', 'email', 'code', 'score', 'date']
+fields_list = ['id', 'email', 'code']
+fields_list_admin = ['id', 'name', 'email', 'code', 'score', 'date']
