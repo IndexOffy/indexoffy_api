@@ -39,10 +39,20 @@ def not_found(error):
 from app.modules.public.api_doc.routes import mod_doc as doc
 from app.modules.public.api_user.routes import mod_user as user
 
+from app.modules.system.base_customer.routes import mod_base_customer
+from app.modules.system.base_error.routes import mod_base_error
+from app.modules.system.base_log.routes import mod_base_log
+from app.modules.system.base_token.routes import mod_base_token
+
 # Register blueprint(s)
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 app.register_blueprint(doc)
 app.register_blueprint(user)
+
+app.register_blueprint(mod_base_customer)
+app.register_blueprint(mod_base_error)
+app.register_blueprint(mod_base_log)
+app.register_blueprint(mod_base_token)
 
 from app.models.user import User
 from app.models.base_customer import BaseCustomer
