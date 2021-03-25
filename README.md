@@ -8,6 +8,6 @@
 # Bem-vindo ao Projeto IndexOffy!
 
 ## 🚀 Link API Completa
-- http://app.indexoffy.com/api/doc/
+- http://api.indexoffy.com/
 
 ## ✔️ Introdução
