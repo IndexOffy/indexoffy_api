@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from app import db
+from app import app, db
 from flask import request
 from functools import wraps
 
@@ -93,5 +93,23 @@ class BaseDecorator(object):
                 return f(data, *args, **kwargs)
 
             return response.permission_denied() 
+        
+        return decorated
+
+    def validate_token_system(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            data = request.view_args.get('id')
+            access_token = request.headers.get('access_token')
+            
+            response = BaseResponse(
+                model_class=str(__name__),
+                function="validate_token_system",
+            )
+
+            if access_token == app.config['SECRET_KEY']:
+                return f(data, *args, **kwargs)
+
+            return response.permission_denied()
         
         return decorated
