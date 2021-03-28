@@ -14,17 +14,26 @@ class ViewBaseLog(object):
     def __init__(self):
         super().__init__()
 
+    @mod_base_log.route('/', methods=['GET'])
+    @BaseDecorator.validate_token_system
+    @BaseDecorator.system
+    def get_all(user, data):
+        return jsonify({"message": "successfully", "data": "get_all"}), 200
+
+    @mod_base_log.route('/', methods=['POST'])
+    @BaseDecorator.validate_token_system
+    @BaseDecorator.system
+    def post(user, data):
+        return jsonify({"message": "successfully", "data": "post"}), 201
+
     @mod_base_log.route('/<id>', methods=['GET'])
     @BaseDecorator.validate_token_system
-    def get(system, id):
-        return jsonify({"message": "successfully", "data": system}), 200
-
-    @mod_base_log.route('/<id>', methods=['POST'])
-    @BaseDecorator.validate_token_system
-    def post(system, id):
-        return jsonify({"message": "successfully", "data": system}), 201
+    @BaseDecorator.system
+    def get(user, data, id):
+        return jsonify({"message": "successfully", "data": "get"}), 200
 
     @mod_base_log.route('/<id>', methods=['PUT'])
     @BaseDecorator.validate_token_system
-    def put(system, id):
-        return jsonify({"message": "successfully", "data": system}), 201
+    @BaseDecorator.system
+    def put(user, data, id):
+        return jsonify({"message": "successfully", "data": "put"}), 201
