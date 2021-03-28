@@ -1,6 +1,6 @@
 # Import the database object (db) from the main application module
 # We will define this inside /app/__init__.py in the next sections.
-from app import db
+from app import db, ma
 
 # Define a base model for other database tables to inherit
 class Base(db.Model):
@@ -31,3 +31,10 @@ class BaseCustomer(Base):
 
     def __repr__(self):
         return '<id %r>' % (self.id)
+
+class BaseCustomerSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'name', 'email', 'password', 'status')
+
+base_customer_schema = BaseCustomerSchema()
+base_customers_schema = BaseCustomerSchema(many=True)
