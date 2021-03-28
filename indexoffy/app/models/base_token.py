@@ -28,13 +28,7 @@ class BaseToken(Base):
         return '<id %r>' % (self.id)
 class BaseTokenSchema(ma.Schema):
     class Meta:
-        fields = (
-            'id',
-            'base_customer',
-            'api_token',
-            'status',
-            'api_type'
-        )
+        fields = ('id', 'base_customer', 'api_token', 'status', 'api_type')
 
-base_token_schema = BaseTokenSchema()
-base_tokens_schema = BaseTokenSchema(many=True)
+base_schema = BaseTokenSchema()
+base_schemas = BaseTokenSchema(many=True)
