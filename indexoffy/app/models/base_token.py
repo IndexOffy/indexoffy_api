@@ -1,8 +1,5 @@
-# Import the database object (db) from the main application module
-# We will define this inside /app/__init__.py in the next sections.
-from app import db
+from app import db, ma
 
-# Define a base model for other database tables to inherit
 class Base(db.Model):
 
     __abstract__  = True
@@ -11,7 +8,6 @@ class Base(db.Model):
     date_created  = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-# Define a BaseToken model
 class BaseToken(Base):
 
     __tablename__ = 'base_token'
@@ -21,7 +17,6 @@ class BaseToken(Base):
     status = db.Column(db.Boolean, nullable=False)
     api_type = db.Column(db.SmallInteger, nullable=False)
 
-    # New instance instantiation procedure
     def __init__(self, base_customer, api_token, status, api_type):
 
         self.base_customer  = base_customer
@@ -31,3 +26,15 @@ class BaseToken(Base):
 
     def __repr__(self):
         return '<id %r>' % (self.id)
+class BaseTokenSchema(ma.Schema):
+    class Meta:
+        fields = (
+            'id',
+            'base_customer',
+            'api_token',
+            'status',
+            'api_type'
+        )
+
+base_token_schema = BaseTokenSchema()
+base_tokens_schema = BaseTokenSchema(many=True)

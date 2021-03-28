@@ -1,8 +1,5 @@
-# Import the database object (db) from the main application module
-# We will define this inside /app/__init__.py in the next sections.
-from app import db
+from app import db, ma
 
-# Define a base model for other database tables to inherit
 class Base(db.Model):
 
     __abstract__  = True
@@ -11,9 +8,8 @@ class Base(db.Model):
     date_created  = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-# Define a BaseLog model
 class BaseLog(Base):
-
+    
     __tablename__ = 'base_log'
 
     base_customer = db.Column(db.Integer, nullable=False)
@@ -32,7 +28,6 @@ class BaseLog(Base):
     ip_address = db.Column(db.Integer, nullable=True)
     route = db.Column(db.String(100), nullable=True)
 
-    # New instance instantiation procedure
     def __init__(self,
         base_customer,
         user_name,
@@ -92,3 +87,27 @@ class BaseLog(Base):
         }
 
         return base_log_data
+
+class BaseErrorSchema(ma.Schema):
+    class Meta:
+        fields = (
+            'id',
+            'base_customer',
+            'user_name',
+            'user_email',
+            'operation',
+            'model_class',
+            'function',
+            'model_id',
+            'params',
+            'args',
+            'result',
+            'message',
+            'status',
+            'api_token',
+            'ip_address',
+            'route'
+        )
+
+base_log_schema = BaseErrorSchema()
+base_logs_schema = BaseErrorSchema(many=True)

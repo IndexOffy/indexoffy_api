@@ -1,17 +1,12 @@
-# Import the database object (db) from the main application module
-# We will define this inside /app/__init__.py in the next sections.
-from app import db
+from app import db, ma
 
-# Define a base model for other database tables to inherit
 class Base(db.Model):
-
+    
     __abstract__  = True
 
     id = db.Column(db.Integer, primary_key=True)
     date_created  = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
-
-# Define a BaseError model
 class BaseError(Base):
 
     __tablename__ = 'base_error'
@@ -20,7 +15,6 @@ class BaseError(Base):
     model_class = db.Column(db.String(50), nullable=False)
     traceback = db.Column(db.String(256), nullable=True)
 
-    # New instance instantiation procedure
     def __init__(self, base_customer, model_class, traceback):
 
         self.base_customer = base_customer
@@ -29,3 +23,14 @@ class BaseError(Base):
 
     def __repr__(self):
         return '<id %r>' % (self.id)
+class BaseErrorSchema(ma.Schema):
+    class Meta:
+        fields = (
+            'id',
+            'base_customer',
+            'model_class',
+            'traceback'
+        )
+
+base_error_schema = BaseErrorSchema()
+base_errors_schema = BaseErrorSchema(many=True)

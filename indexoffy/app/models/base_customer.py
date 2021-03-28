@@ -34,7 +34,13 @@ class BaseCustomer(Base):
 
 class BaseCustomerSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email', 'password', 'status')
+        fields = (
+            'id',
+            'name',
+            'email',
+            'password',
+            'status'
+        )
 
 base_customer_schema = BaseCustomerSchema()
 base_customers_schema = BaseCustomerSchema(many=True)
