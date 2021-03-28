@@ -99,8 +99,9 @@ class BaseDecorator(object):
     def validate_token_system(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            data = request.view_args.get('id')
+            user = "Admin"
             access_token = request.headers.get('access_token')
+            base_customer = request.headers.get('base_customer')
             
             response = BaseResponse(
                 model_class=str(__name__),
@@ -108,8 +109,32 @@ class BaseDecorator(object):
             )
 
             if access_token == app.config['SECRET_KEY']:
-                return f(data, *args, **kwargs)
+                return f(user, *args, **kwargs)
 
-            return response.permission_denied()
+        return decorated
+
+    def system(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+
+            response = BaseResponse(
+                model_class=str(__name__),
+                function="system",
+            )
+
+            try:
+                request_id = int(request.view_args.get('id', 0))
+            except:
+                return response.invalid_data()
+
+            data= {
+                "id": request_id,
+                "limit": request.args.get('limit', 1),
+                "page": request.args.get('page', 1),
+                "request": request,
+            }
+            
+            data = request.view_args.get('id', None)
+            return f(data, *args, **kwargs)
         
         return decorated
