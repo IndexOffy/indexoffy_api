@@ -69,3 +69,26 @@ class BaseLog(Base):
 
     def __repr__(self):
         return '<id %r>' % (self.id)
+
+    def default(self):
+        """
+        """
+        base_log_data = { 
+            'base_customer': 0,
+            'user_name': "No name",
+            'user_email': "No email",
+            'operation': "operation",
+            'model_class': "model_class",
+            'function': "function",
+            'model_id': 0,
+            'params': None,
+            'args': None,
+            'result': "No result",
+            'message': "No message",
+            'status': 0,
+            'api_token': None,
+            'ip_address': None,
+            'route': None
+        }
+
+        return base_log_data
