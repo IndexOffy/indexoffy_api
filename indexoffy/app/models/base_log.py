@@ -109,5 +109,5 @@ class BaseErrorSchema(ma.Schema):
             'route'
         )
 
-base_log_schema = BaseErrorSchema()
-base_logs_schema = BaseErrorSchema(many=True)
+base_schema = BaseErrorSchema()
+base_schemas = BaseErrorSchema(many=True)
