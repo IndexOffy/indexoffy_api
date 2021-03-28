@@ -119,3 +119,16 @@ class BaseResponse(object):
             print(error)
         finally:
             return jsonify({'message': 'invalid data', 'data': {}}), status
+
+    def data_not_found(self, result=None, params=None):
+        status = 404
+        try:
+            self.base_log_data["message"] = "invalid_data"
+            self.base_log_data["status"] = status
+            self.base_log_data["result"] = result
+            self.base_log_data["params"] = params
+            self.create_log()
+        except Exception as error:
+            print(error)
+        finally:
+            return jsonify({'message': 'data not found', 'data': {}}), status
