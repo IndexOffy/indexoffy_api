@@ -42,5 +42,5 @@ class BaseCustomerSchema(ma.Schema):
             'status'
         )
 
-base_customer_schema = BaseCustomerSchema()
-base_customers_schema = BaseCustomerSchema(many=True)
+base_schema = BaseCustomerSchema()
+base_schemas = BaseCustomerSchema(many=True)
