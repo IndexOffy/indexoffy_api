@@ -13,7 +13,7 @@ class ControlerBaseCustomer(BaseApi):
 
         self.base_customer = base_customer
 
-    def get(self, id):
+    def get(self, model_id=None):
         try:
             query = BaseCustomer.query \
                 .filter(
