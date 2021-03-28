@@ -32,5 +32,5 @@ class BaseErrorSchema(ma.Schema):
             'traceback'
         )
 
-base_error_schema = BaseErrorSchema()
-base_errors_schema = BaseErrorSchema(many=True)
+base_schema = BaseErrorSchema()
+base_schemas = BaseErrorSchema(many=True)
