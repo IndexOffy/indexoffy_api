@@ -1,8 +1,5 @@
-# Import the database object (db) from the main application module
-# We will define this inside /app/__init__.py in the next sections.
 from app import db, ma
 
-# Define a base model for other database tables to inherit
 class Base(db.Model):
 
     __abstract__  = True
@@ -11,7 +8,6 @@ class Base(db.Model):
     date_created  = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-# Define a BaseCustomer model
 class BaseCustomer(Base):
 
     __tablename__ = 'base_customer'
@@ -21,7 +17,6 @@ class BaseCustomer(Base):
     password = db.Column(db.String(192),  nullable=False)
     status = db.Column(db.SmallInteger, nullable=False)
 
-    # New instance instantiation procedure
     def __init__(self, name, email, password, status):
 
         self.name       = name
@@ -34,13 +29,8 @@ class BaseCustomer(Base):
 
 class BaseCustomerSchema(ma.Schema):
     class Meta:
-        fields = (
-            'id',
-            'name',
-            'email',
-            'password',
-            'status'
-        )
+        fields = ('id','name','email','password','status')
+        fields_edit = ('name','email','password','status')
 
 base_schema = BaseCustomerSchema()
 base_schemas = BaseCustomerSchema(many=True)
