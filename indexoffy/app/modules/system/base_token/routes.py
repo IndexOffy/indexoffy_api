@@ -3,6 +3,7 @@
 from app import db
 from flask import Blueprint, jsonify
 
+from app.api.utils.responses import BaseResponse
 from app.api.utils.decorators import BaseDecorator
 from app.modules.system.base_token.controllers import ControlerBaseToken
 
@@ -19,7 +20,7 @@ class ViewBaseToken(object):
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def get_all(user, data):
-        return ControlerBaseToken(base_customer=user,data=data).get()
+        return BaseResponse().invalid_data()
 
     @mod_base_token.route('/', methods=['POST'])
     @BaseDecorator.validate_token_system

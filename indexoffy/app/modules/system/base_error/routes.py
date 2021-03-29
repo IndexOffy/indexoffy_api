@@ -3,6 +3,7 @@
 from app import db
 from flask import Blueprint, jsonify
 
+from app.api.utils.responses import BaseResponse
 from app.api.utils.decorators import BaseDecorator
 from app.modules.system.base_error.controllers import ControlerBaseError
 
@@ -19,22 +20,22 @@ class ViewBaseError(object):
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def get_all(user, data):
-        return ControlerBaseError(data=data).get()
+        return BaseResponse().invalid_data()
 
     @mod_base_error.route('/', methods=['POST'])
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def post(user, data):
-        return ControlerBaseError(data=data).post()
+        return ControlerBaseError(base_customer=user, data=data).post()
 
     @mod_base_error.route('/<id>', methods=['GET'])
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def get(user, data, id):
-        return ControlerBaseError(data=data).get(model_id=id)
+        return ControlerBaseError(base_customer=user, data=data).get(model_id=id)
 
     @mod_base_error.route('/<id>', methods=['PUT'])
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def put(user, data, id):
-        return ControlerBaseError(data=data).put(model_id=id)
+        return BaseResponse().method_not_allowed()

@@ -39,10 +39,10 @@ class BaseApi(object):
         return self.response.data_not_found()
 
     def put(self, model_id=None):
-        pass
+        return self.response.successfully_fetched()
 
     def post(self):
-        pass
+        return self.response.successfully_fetched()
 
     def delete(self):
-        pass
+        return self.response.successfully_fetched()

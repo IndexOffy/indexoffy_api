@@ -29,6 +29,8 @@ class BaseToken(Base):
 class BaseTokenSchema(ma.Schema):
     class Meta:
         fields = ('id', 'base_customer', 'api_token', 'status', 'api_type')
+        fields_get = ('base_customer', 'api_token', 'status', 'api_type')
+        fields_put = ('api_token', 'status')
 
 base_schema = BaseTokenSchema()
 base_schemas = BaseTokenSchema(many=True)
