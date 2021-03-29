@@ -104,15 +104,19 @@ class BaseDecorator(object):
                 function="validate_token_system",
             )
 
-            user = request.headers.get('base_customer')
+            user_id = request.headers.get('base_customer')
             access_token = request.headers.get('access_token')
 
-            query_user = db.session.query(BaseCustomer.id) \
+            user = db.session.query(
+                    BaseCustomer.id.label('base_customer'),
+                    BaseCustomer.name.label('name'),
+                    BaseCustomer.email.label('email')
+                ) \
                 .filter(
-                    BaseCustomer.id == user) \
-                .first()
+                    BaseCustomer.id == user_id,
+                ).first()
 
-            if not query_user:
+            if not user:
                 return response.user_dont_exist()
 
             if access_token == app.config['SECRET_KEY']:
@@ -125,16 +129,10 @@ class BaseDecorator(object):
     def system(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-
-            response = BaseResponse(
-                model_class=str(__name__),
-                function="system",
-            )
-
             try:
                 request_id = int(request.view_args.get('id', 0))
             except:
-                return response.invalid_data()
+                return BaseResponse().invalid_data()
 
             data= {
                 "id": request_id,
@@ -143,7 +141,6 @@ class BaseDecorator(object):
                 "request": request,
             }
             
-            data = request.view_args.get('id', None)
             return f(data, *args, **kwargs)
         
         return decorated

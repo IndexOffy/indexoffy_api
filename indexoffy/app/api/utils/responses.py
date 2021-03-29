@@ -10,20 +10,22 @@ from app.models.base_log import BaseLog
 class BaseResponse(object):
     """ Base View to Response common to all Webservices.
     """
-    def __init__(self, data=None, model_class=None, function=None):
+    def __init__(self, data=None, user=None, model_class=None, function=None):
         """Constructor
         """
         base_log_data = BaseLog.default(self)
 
+        if user:
+            base_log_data['base_customer'] = user.base_customer
+            base_log_data['user_name'] = user.name
+            base_log_data['user_email'] = user.email
+
         if data:
-            base_log_data['base_customer'] = data['user'].base_customer,
-            base_log_data['user_name'] = data['user'].name,
-            base_log_data['user_email'] = data['user'].email,
-            base_log_data['operation'] = data['request'].environ['REQUEST_METHOD'],
-            base_log_data['model_class'] = model_class,
-            base_log_data['function'] = function,
-            base_log_data['args'] = str(data['request'].view_args),
-            base_log_data['route'] = data['request'].url,
+            base_log_data['operation'] = data['request'].environ['REQUEST_METHOD']
+            base_log_data['model_class'] = model_class
+            base_log_data['function'] = function
+            base_log_data['args'] = str(data['request'].view_args)
+            base_log_data['route'] = data['request'].url
 
         self.base_log_data = base_log_data
 
