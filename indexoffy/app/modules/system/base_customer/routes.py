@@ -5,6 +5,7 @@ from flask import Blueprint, jsonify
 
 from app.api.utils.responses import BaseResponse
 from app.api.utils.decorators import BaseDecorator
+
 from app.modules.system.base_customer.controllers import ControlerBaseCustomer
 
 mod_base_customer = Blueprint('base_customers', __name__, url_prefix='/base_customers')
