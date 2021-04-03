@@ -30,7 +30,7 @@ class ControlerBaseCustomer(BaseApi):
                 .first()
             if query:
                 result = self.base_schema.dump(query)
-                return self.response.successfully_fetched(result=result)
+                return self.response.successfully_fetched(result=result, limit=1, quantity=1)
         except:
             return self.response.server_error()
 
