@@ -1,6 +1,7 @@
 from app import db, ma
 from marshmallow import fields, EXCLUDE
 
+
 class Base(db.Model):
 
     __abstract__  = True
@@ -13,7 +14,7 @@ class BaseToken(Base):
 
     __tablename__ = 'base_token'
 
-    base_customer = db.Column(db.Integer, nullable=False)
+    base_customer = db.Column(db.Integer, db.ForeignKey('base_customer.id'), nullable=False)
     api_token = db.Column(db.String(256), nullable=False, unique=True)
     status = db.Column(db.Boolean, nullable=False)
     api_type = db.Column(db.SmallInteger, nullable=False)

@@ -1,6 +1,7 @@
 from app import db, ma
 from marshmallow import fields, EXCLUDE
 
+
 class Base(db.Model):
     
     __abstract__  = True
@@ -12,7 +13,7 @@ class BaseError(Base):
 
     __tablename__ = 'base_error'
 
-    base_customer = db.Column(db.Integer, nullable=False)
+    base_customer = db.Column(db.Integer, db.ForeignKey('base_customer.id'), nullable=False)
     model_class = db.Column(db.String(50), nullable=False)
     traceback = db.Column(db.String(256), nullable=True)
 

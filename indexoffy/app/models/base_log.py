@@ -1,6 +1,7 @@
 from app import db, ma
 from marshmallow import fields, EXCLUDE
 
+
 class Base(db.Model):
 
     __abstract__  = True
@@ -13,7 +14,7 @@ class BaseLog(Base):
     
     __tablename__ = 'base_log'
 
-    base_customer = db.Column(db.Integer, nullable=True)
+    base_customer = db.Column(db.Integer, db.ForeignKey('base_customer.id'), nullable=False)
     user_name = db.Column(db.String(100), nullable=True)
     user_email = db.Column(db.String(100), nullable=True)
     operation = db.Column(db.String(10), nullable=True)
