@@ -19,6 +19,7 @@ class User(Base):
     score = db.Column(db.Integer, nullable=False)
     date = db.Column(db.Date, nullable=False)
     status = db.Column(db.Boolean, nullable=False)
+    visibility = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, name, email, code, score, date, status):
 
@@ -28,6 +29,7 @@ class User(Base):
         self.score      = score
         self.date       = date
         self.status     = status
+        self.visibility = visibility
 
     def __repr__(self):
         return '<id %r>' % (self.id)
@@ -35,7 +37,7 @@ class User(Base):
 class UserSchema(ma.Schema):
     class Meta:
         unknown = EXCLUDE
-        fields = ('id', 'name', 'email', 'code', 'score', 'date')
+        fields = ('id', 'name', 'email', 'code', 'score', 'date', 'status', 'visibility')
         
 base_schema = UserSchema()
 base_schemas = UserSchema(many=True)
