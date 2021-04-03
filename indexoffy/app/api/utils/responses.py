@@ -21,8 +21,10 @@ class BaseResponse(object):
         if data:
             base_log_data['operation'] = data['request'].environ['REQUEST_METHOD']
             base_log_data['model_class'] = model_class
+            base_log_data['model_id'] = data['id']
             base_log_data['function'] = function
-            base_log_data['args'] = str(data['request'].view_args)
+            base_log_data['args'] = str(data['args'])
+            base_log_data['params'] = str(data['params'])
             base_log_data['route'] = data['request'].url
 
         self.base_log_data = base_log_data
@@ -33,7 +35,7 @@ class BaseResponse(object):
             db.session.add(base_log)
             db.session.commit()
         except Exception as error:
-            pass
+            db.session.rollback()
 
     def successfully_fetched(self, result=None, params=None):
         status = 200
@@ -41,6 +43,7 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
+            self.base_log_data['result'] = result
             self.create_log()
         except Exception as error:
             print(error)
