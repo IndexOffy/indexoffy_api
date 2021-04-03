@@ -1,5 +1,7 @@
 # coding=utf-8
 
+import ast
+
 from app import app, db
 from flask import request
 from functools import wraps
@@ -126,13 +128,22 @@ class BaseDecorator(object):
     def system(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            request_id = request.view_args.get('id', 0)
+            request_id = request.view_args.get('id', "0")
+            request_body = request.data.decode("UTF-8")
 
             if request_id.isnumeric() == False:
                 return BaseResponse().invalid_data()
 
+            if request_body:
+                request_body = ast.literal_eval(request_body)
+            else:
+                request_body = {}
+
             data= {
                 "id": request_id,
+                "body": request_body,
+                "params": request.args,
+                "args": request.view_args,
                 "limit": request.args.get('limit', 1),
                 "page": request.args.get('page', 1),
                 "request": request,
