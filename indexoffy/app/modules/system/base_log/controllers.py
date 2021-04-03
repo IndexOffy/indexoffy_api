@@ -9,7 +9,7 @@ class ControlerBaseLog(BaseApi):
     """
     """
     def __init__(self, base_customer, data=None):
-        super().__init__(base_customer)
+        super().__init__(base_customer, data)
 
         self.model_class = BaseLog
         self.base_schema = base_schema
