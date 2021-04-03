@@ -38,4 +38,4 @@ class ViewBaseCustomer(object):
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def put(data, user, id):
-        return ControlerBaseCustomer(data=data).put(model_id=id)
+        return ControlerBaseCustomer(data=data, base_customer=user).put(model_id=id)

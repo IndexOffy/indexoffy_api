@@ -2,6 +2,7 @@
 
 from app import db
 from app.api.base import BaseApi
+from app.api.utils.responses import BaseResponse
 
 from app.models.base_customer import BaseCustomer, base_schema, base_schemas
 
@@ -14,6 +15,12 @@ class ControlerBaseCustomer(BaseApi):
         self.model_class = BaseCustomer
         self.base_schema = base_schema
         self.base_schemas = base_schemas
+
+        self.response = BaseResponse(
+            base_customer=base_customer,
+            model_class=str(self.model_class.__name__),
+            data=data
+        )
 
     def get(self, model_id=None):
         try:
