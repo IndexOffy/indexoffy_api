@@ -1,4 +1,5 @@
 from app import db, ma
+from marshmallow import fields, EXCLUDE
 
 class Base(db.Model):
 
@@ -28,9 +29,8 @@ class BaseToken(Base):
         return '<id %r>' % (self.id)
 class BaseTokenSchema(ma.Schema):
     class Meta:
+        unknown = EXCLUDE
         fields = ('id', 'base_customer', 'api_token', 'status', 'api_type')
-        fields_get = ('base_customer', 'api_token', 'status', 'api_type')
-        fields_put = ('api_token', 'status')
 
 base_schema = BaseTokenSchema()
 base_schemas = BaseTokenSchema(many=True)

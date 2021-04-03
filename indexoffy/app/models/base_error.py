@@ -1,4 +1,5 @@
 from app import db, ma
+from marshmallow import fields, EXCLUDE
 
 class Base(db.Model):
     
@@ -25,12 +26,8 @@ class BaseError(Base):
         return '<id %r>' % (self.id)
 class BaseErrorSchema(ma.Schema):
     class Meta:
-        fields = (
-            'id',
-            'base_customer',
-            'model_class',
-            'traceback'
-        )
+        unknown = EXCLUDE
+        fields = ('id', 'base_customer', 'model_class', 'traceback')
 
 base_schema = BaseErrorSchema()
 base_schemas = BaseErrorSchema(many=True)

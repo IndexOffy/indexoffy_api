@@ -1,4 +1,5 @@
 from app import db, ma
+from marshmallow import fields, EXCLUDE
 
 class Base(db.Model):
 
@@ -90,6 +91,7 @@ class BaseLog(Base):
 
 class BaseErrorSchema(ma.Schema):
     class Meta:
+        unknown = EXCLUDE
         fields = (
             'id',
             'base_customer',

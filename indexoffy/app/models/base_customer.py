@@ -1,5 +1,5 @@
 from app import db, ma
-
+from marshmallow import fields, EXCLUDE
 class Base(db.Model):
 
     __abstract__  = True
@@ -28,9 +28,13 @@ class BaseCustomer(Base):
         return '<id %r>' % (self.id)
 
 class BaseCustomerSchema(ma.Schema):
+    name = fields.Str()
+    email = fields.Email()
+    password = fields.Str()
+    status = fields.Integer()
     class Meta:
+        unknown = EXCLUDE
         fields = ('id','name','email','password','status')
-        fields_edit = ('name','email','password','status')
 
 base_schema = BaseCustomerSchema()
 base_schemas = BaseCustomerSchema(many=True)
