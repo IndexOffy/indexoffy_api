@@ -15,6 +15,7 @@ class BaseApi(object):
         """Constructor
         """
         self.data = data
+        self.params = {}
         self.model_class = None
         self.base_schema = None
         self.base_schemas = None
@@ -28,10 +29,20 @@ class BaseApi(object):
         # Limiting the query to 50 records.
         request_limit = 50 if int(self.data['limit']) > 50 else self.data['limit']
 
+        # Adequacy of received parameters
+        for item in self.base_schema.fields:
+            option = self.data['params'].get(item)
+            if option:
+                self.params[item] = option
+
         try:
-            users = self.model_class.query.limit(request_limit).all()
-            if users:
-                result = self.base_schemas.dump(users)
+            query_model = self.model_class.query
+            for item in self.params:
+                query_model = query_model.filter(getattr(self.model_class, item) == self.params[item])
+            query_model = query_model.all()
+
+            if query_model:
+                result = self.base_schemas.dump(query_model)
                 return self.response.successfully_fetched(result=result, limit=request_limit, quantity=len(result))
         except:
             return self.response.server_error()
