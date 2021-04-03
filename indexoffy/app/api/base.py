@@ -10,19 +10,16 @@ from app.api.utils.responses import BaseResponse
 class BaseApi(object):
     """ Base View to create helpers common to all Webservices.
     """
-    def __init__(self, data, user):
+    def __init__(self, base_customer, data=None):
         """Constructor
         """
         self.data = data
-        self.user = user
         self.model_class = None
         self.base_schema = None
         self.base_schemas = None
-        self.base_customer = user.base_customer
+        self.base_customer = base_customer
         self.response = BaseResponse(
-            data=data,
-            user=user,
-            model_class=str(self.model_class)
+            base_customer=base_customer
         )
 
     def get(self, model_id):

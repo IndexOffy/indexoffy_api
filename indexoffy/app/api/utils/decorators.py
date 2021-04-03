@@ -8,6 +8,7 @@ from app.models.base_token import BaseToken
 from app.models.base_customer import BaseCustomer
 from app.api.utils.responses import BaseResponse
 
+
 class BaseDecorator(object):
     """ Base View to Decorators common to all Webservices.
     """
@@ -99,28 +100,24 @@ class BaseDecorator(object):
     def validate_token_system(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            response = BaseResponse(
-                model_class=str(__name__),
-                function="validate_token_system",
-            )
-
-            user_id = request.headers.get('base_customer')
+            model_id = request.headers.get('base_customer')
             access_token = request.headers.get('access_token')
 
-            user = db.session.query(
-                    BaseCustomer.id.label('base_customer'),
-                    BaseCustomer.name.label('name'),
-                    BaseCustomer.email.label('email')
-                ) \
-                .filter(
-                    BaseCustomer.id == user_id,
-                ).first()
+            if model_id.isnumeric() == False:
+                return BaseResponse().invalid_data()
+            else:
+                response = BaseResponse(base_customer=model_id)
 
-            if not user:
-                return response.user_dont_exist()
+                query_user = db.session.query(BaseCustomer.id) \
+                    .filter(
+                        BaseCustomer.id == model_id,
+                    ).first()
+
+                if not query_user:
+                    return response.user_dont_exist()
 
             if access_token == app.config['SECRET_KEY']:
-                return f(user, *args, **kwargs)
+                return f(query_user.id, *args, **kwargs)
 
             return response.permission_denied() 
 
@@ -129,9 +126,9 @@ class BaseDecorator(object):
     def system(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            try:
-                request_id = int(request.view_args.get('id', 0))
-            except:
+            request_id = request.view_args.get('id', 0)
+
+            if request_id.isnumeric() == False:
                 return BaseResponse().invalid_data()
 
             data= {

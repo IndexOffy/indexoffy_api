@@ -10,15 +10,13 @@ from app.models.base_log import BaseLog
 class BaseResponse(object):
     """ Base View to Response common to all Webservices.
     """
-    def __init__(self, data=None, user=None, model_class=None, function=None):
+    def __init__(self, base_customer=None, data=None, model_class=None, function=None):
         """Constructor
         """
         base_log_data = BaseLog.default(self)
 
-        if user:
-            base_log_data['base_customer'] = user.base_customer
-            base_log_data['user_name'] = user.name
-            base_log_data['user_email'] = user.email
+        if base_customer:
+            base_log_data['base_customer'] = base_customer
 
         if data:
             base_log_data['operation'] = data['request'].environ['REQUEST_METHOD']
@@ -43,8 +41,6 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
-            self.base_log_data["result"] = result
-            self.base_log_data["params"] = params
             self.create_log()
         except Exception as error:
             print(error)
@@ -57,8 +53,6 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
-            self.base_log_data["result"] = result
-            self.base_log_data["params"] = params
             self.create_log()
         except Exception as error:
             print(error)
@@ -71,8 +65,6 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
-            self.base_log_data["result"] = result
-            self.base_log_data["params"] = params
             self.create_log()
         except Exception as error:
             print(error)
@@ -121,8 +113,6 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
-            self.base_log_data["result"] = result
-            self.base_log_data["params"] = params
             self.create_log()
         except Exception as error:
             print(error)
@@ -135,8 +125,6 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
-            self.base_log_data["result"] = result
-            self.base_log_data["params"] = params
             self.create_log()
         except Exception as error:
             print(error)
@@ -149,8 +137,6 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
-            self.base_log_data["result"] = result
-            self.base_log_data["params"] = params
             self.create_log()
         except Exception as error:
             print(error)

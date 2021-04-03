@@ -2,6 +2,8 @@
 
 from app import db
 
+from app.api.utils.responses import BaseResponse
+
 class BaseUtils(object):
     """ Base View to Utils common to all Webservices.
     """
@@ -12,7 +14,7 @@ class BaseUtils(object):
     def check_number(self, value):
         """
         """
-        return None
+        pass
 
     def check_character(self, value):
         """
