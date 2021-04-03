@@ -37,8 +37,9 @@ class BaseResponse(object):
         except Exception as error:
             db.session.rollback()
 
-    def successfully_fetched(self, result=None, params=None):
+    def successfully_fetched(self, result=None, params=None, limit=None, quantity=None):
         status = 200
+        status_message = "success"
         message = "Successful Request"
         try:
             self.base_log_data["message"] = message
@@ -48,10 +49,21 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({"message": message, "data": result}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": result
+                }
+            ), status
     
-    def server_error(self, result=None, params=None):
+    def server_error(self, result=None, params=None, limit=None, quantity=None):
         status = 500
+        status_message = "fail"
         message = "Internal Server Error"
         try:
             self.base_log_data["message"] = message
@@ -60,10 +72,20 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({"message": message, "data":{}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
 
-    def user_dont_exist(self, result=None, params=None):
+    def user_dont_exist(self, result=None, params=None, limit=None, quantity=None):
         status = 404
+        status_message = "fail"
         message = "User Don't Exist"
         try:
             self.base_log_data["message"] = message
@@ -72,10 +94,20 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({"message": message, "data":{}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
 
-    def token_is_missing(self, result=None, params=None):
+    def token_is_missing(self, result=None, params=None, limit=None, quantity=None):
         status = 401
+        status_message = "fail"
         message = 'Token is Missing'
         try:
             self.base_log_data["message"] = message
@@ -84,10 +116,20 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({'message': message, 'data': {}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
 
-    def token_is_invalid(self, result=None, params=None):
+    def token_is_invalid(self, result=None, params=None, limit=None, quantity=None):
         status = 401
+        status_message = "fail"
         message = 'Token is Invalid'
         try:
             self.base_log_data["message"] = message
@@ -96,10 +138,20 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({'message': message, 'data': {}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
 
-    def permission_denied(self, result=None, params=None):
+    def permission_denied(self, result=None, params=None, limit=None, quantity=None):
         status = 401
+        status_message = "fail"
         message = "Permission Denied"
         try:
             self.base_log_data["message"] = message
@@ -108,10 +160,20 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({'message': message, 'data': {}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
 
-    def invalid_data(self, result=None, params=None):
+    def invalid_data(self, result=None, params=None, limit=None, quantity=None):
         status = 422
+        status_message = "fail"
         message = "Unprocessable Entity"
         try:
             self.base_log_data["message"] = message
@@ -120,10 +182,20 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({'message': message, 'data': {}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
 
-    def data_not_found(self, result=None, params=None):
+    def data_not_found(self, result=None, params=None, limit=None, quantity=None):
         status = 404
+        status_message = "fail"
         message = "Not Found"
         try:
             self.base_log_data["message"] = message
@@ -132,10 +204,20 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({'message': message, 'data': {}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
 
-    def method_not_allowed(self, result=None, params=None):
+    def method_not_allowed(self, result=None, params=None, limit=None, quantity=None):
         status = 405
+        status_message = "fail"
         message = "Method Not Allowed"
         try:
             self.base_log_data["message"] = message
@@ -144,4 +226,13 @@ class BaseResponse(object):
         except Exception as error:
             print(error)
         finally:
-            return jsonify({'message': message, 'data': {}}), status
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
