@@ -102,7 +102,7 @@ class BaseDecorator(object):
     def validate_token_system(f):
         @wraps(f)
         def decorated(*args, **kwargs):
-            model_id = request.headers.get('base_customer')
+            model_id = request.headers.get('base_customer', "0")
             access_token = request.headers.get('access_token')
 
             if model_id.isnumeric() == False:
@@ -119,7 +119,7 @@ class BaseDecorator(object):
                     return BaseResponse().server_error()
 
                 if not query_user:
-                    return response.user_dont_exist()
+                    return response.permission_denied()
 
             if access_token == app.config['SECRET_KEY']:
                 return f(query_user.id, *args, **kwargs)
