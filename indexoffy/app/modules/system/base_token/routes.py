@@ -26,16 +26,16 @@ class ViewBaseToken(object):
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def post(data, user):
-        return ControlerBaseToken(base_customer=user,data=data).post()
+        return ControlerBaseToken(data=data, base_customer=user).post()
 
     @mod_base_token.route('/<id>', methods=['GET'])
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def get(data, user, id):
-        return ControlerBaseToken(base_customer=user, data=data).get(model_id=id)
+        return ControlerBaseToken(data=data, base_customer=user).get(model_id=id)
 
     @mod_base_token.route('/<id>', methods=['PUT'])
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def put(data, user, id):
-        return ControlerBaseToken(base_customer=user, data=data).put(model_id=id)
+        return ControlerBaseToken(data=data, base_customer=user).put(model_id=id)
