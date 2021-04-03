@@ -57,10 +57,10 @@ class BaseApi(object):
                 setattr(model_data, item, self.data['body'][item])
             db.session.commit()
             result = self.base_schema.dump(model_data)
+            return self.response.successfully_fetched(result=result)
         except Exception as error:
             db.session.rollback()
-
-        return self.response.successfully_fetched()
+            return self.response.server_error()
 
     def post(self):
         """ Method POST
