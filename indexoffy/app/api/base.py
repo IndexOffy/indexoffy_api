@@ -25,6 +25,7 @@ class BaseApi(object):
     def get_all(self):
         """ Method GET All
         """
+        # Limiting the query to 50 records.
         request_limit = 50 if int(self.data['limit']) > 50 else self.data['limit']
 
         try:
@@ -59,11 +60,11 @@ class BaseApi(object):
         """
         model_data = self.model_class.query.get(model_id)
 
-        # Verifica se existe registro.
+        # Checks if there is a record.
         if not model_data:
             return self.response.user_dont_exist()
 
-        # Verificar conteúdo do registro.
+        # Check the contents of the registry.
         if "id" in self.data['body']:
             return self.response.invalid_data()
 
