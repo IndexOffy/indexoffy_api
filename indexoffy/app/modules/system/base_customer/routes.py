@@ -26,13 +26,13 @@ class ViewBaseCustomer(object):
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def post(data, user):
-        return ControlerBaseCustomer(data=data, user=user).post()
+        return ControlerBaseCustomer(data=data, base_customer=user).post()
 
     @mod_base_customer.route('/<id>', methods=['GET'])
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def get(data, user, id):
-        return ControlerBaseCustomer(data=data, user=user).get(model_id=id)
+        return ControlerBaseCustomer(data=data, base_customer=user).get(model_id=id)
 
     @mod_base_customer.route('/<id>', methods=['PUT'])
     @BaseDecorator.validate_token_system

@@ -8,8 +8,8 @@ from app.models.base_customer import BaseCustomer, base_schema, base_schemas
 class ControlerBaseCustomer(BaseApi):
     """
     """
-    def __init__(self, data, user):
-        super().__init__(data, user)
+    def __init__(self, base_customer, data=None):
+        super().__init__(base_customer, data)
 
         self.model_class = BaseCustomer
         self.base_schema = base_schema
