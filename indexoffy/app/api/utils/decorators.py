@@ -134,8 +134,9 @@ class BaseDecorator(object):
             request_id = request.view_args.get('id', "0")
             request_body = request.data.decode("UTF-8")
 
-            if request_id.isnumeric() == False:
-                return BaseResponse().invalid_data()
+            if request_id != "0":
+                if request_id.isnumeric() == False:
+                    return BaseResponse().invalid_data()
 
             if request_body:
                 request_body = ast.literal_eval(request_body)
@@ -147,7 +148,7 @@ class BaseDecorator(object):
                 "body": request_body,
                 "params": request.args,
                 "args": request.view_args,
-                "limit": request.args.get('limit', 1),
+                "limit": request.args.get('limit', 50),
                 "page": request.args.get('page', 1),
                 "request": request,
             }
