@@ -20,7 +20,7 @@ class ViewBaseError(object):
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def get_all(data, user):
-        return BaseResponse().invalid_data()
+        return ControlerBaseError(data=data, base_customer=user).get_all()
 
     @mod_base_error.route('/', methods=['POST'])
     @BaseDecorator.validate_token_system

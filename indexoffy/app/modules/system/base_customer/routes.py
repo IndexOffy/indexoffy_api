@@ -20,7 +20,7 @@ class ViewBaseCustomer(object):
     @BaseDecorator.validate_token_system
     @BaseDecorator.system
     def get_all(data, user):
-        return BaseResponse().invalid_data()
+        return ControlerBaseCustomer(data=data, base_customer=user).get_all()
 
     @mod_base_customer.route('/', methods=['POST'])
     @BaseDecorator.validate_token_system
