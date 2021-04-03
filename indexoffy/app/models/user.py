@@ -1,5 +1,5 @@
 from app import db, ma
-
+from marshmallow import fields, EXCLUDE
 
 class Base(db.Model):
     
@@ -34,10 +34,8 @@ class User(Base):
 
 class UserSchema(ma.Schema):
     class Meta:
+        unknown = EXCLUDE
         fields = ('id', 'name', 'email', 'code', 'score', 'date')
         
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
-fields_list = ['id', 'email', 'code']
-fields_list_admin = ['id', 'name', 'email', 'code', 'score', 'date']
+base_schema = UserSchema()
+base_schemas = UserSchema(many=True)
