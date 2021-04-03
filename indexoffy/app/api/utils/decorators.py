@@ -110,10 +110,13 @@ class BaseDecorator(object):
             else:
                 response = BaseResponse(base_customer=model_id)
 
-                query_user = db.session.query(BaseCustomer.id) \
-                    .filter(
-                        BaseCustomer.id == model_id,
-                    ).first()
+                try:
+                    query_user = db.session.query(BaseCustomer.id) \
+                        .filter(
+                            BaseCustomer.id == model_id,
+                        ).first()
+                except:
+                    return BaseResponse().server_error()
 
                 if not query_user:
                     return response.user_dont_exist()
