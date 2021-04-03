@@ -22,6 +22,21 @@ class BaseApi(object):
         self.response = BaseResponse(base_customer=base_customer)
 
 
+    def get_all(self):
+        """ Method GET All
+        """
+        request_limit = 50 if int(self.data['limit']) > 50 else self.data['limit']
+
+        try:
+            users = self.model_class.query.limit(request_limit).all()
+            if users:
+                result = self.base_schemas.dump(users)
+                return self.response.successfully_fetched(result=result, limit=request_limit, quantity=len(result))
+        except:
+            return self.response.server_error()
+
+        return self.response.successfully_fetched()
+
     def get(self, model_id):
         """ Method GET
         """
@@ -33,7 +48,7 @@ class BaseApi(object):
                 .first()
             if query:
                 result = self.base_schema.dump(query)
-                return self.response.successfully_fetched(result=result)
+                return self.response.successfully_fetched(result=result, limit=1, quantity=1)
         except:
             return self.response.server_error()
 
