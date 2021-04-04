@@ -13,4 +13,5 @@ class ViewDoc(object):
 
     @mod_doc.route('/', methods=['GET'])
     def home():
-        return redirect("/docs/")
+        return redirect("http://app.indexoffy.com")
+        # return redirect("/docs/")
