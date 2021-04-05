@@ -47,8 +47,6 @@ class BaseApi(object):
         except:
             return self.response.server_error()
 
-        return self.response.successfully_fetched()
-
     def get(self, model_id):
         """ Method GET
         """
