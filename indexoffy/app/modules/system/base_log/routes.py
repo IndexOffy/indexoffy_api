@@ -17,25 +17,25 @@ class ViewBaseLog(object):
         super().__init__()
 
     @mod_base_log.route('/', methods=['GET'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def get_all(data, user):
+    @BaseDecorator.validate_token_system
+    def get_all(user, data):
         return ControlerBaseLog(data=data, base_customer=user).get_all()
 
     @mod_base_log.route('/', methods=['POST'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def post(data, user):
+    @BaseDecorator.validate_token_system
+    def post(user, data):
         return ControlerBaseLog(base_customer=user,data=data).post()
 
     @mod_base_log.route('/<id>', methods=['GET'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def get(data, user, id):
+    @BaseDecorator.validate_token_system
+    def get(user, data, id):
         return ControlerBaseLog(base_customer=user, data=data).get(model_id=id)
 
     @mod_base_log.route('/<id>', methods=['PUT'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def put(data, user, id):
+    @BaseDecorator.validate_token_system
+    def put(user, data, id):
         return BaseResponse().method_not_allowed()

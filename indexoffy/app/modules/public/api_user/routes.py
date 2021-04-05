@@ -18,25 +18,25 @@ class ViewUser(object):
         super().__init__()
 
     @mod_user.route('/', methods=['GET'])
-    @BaseDecorator.validate_token
     @BaseDecorator.system
-    def get_all(data, user):
-        return BaseResponse().method_not_allowed()
+    @BaseDecorator.validate_token
+    def get_all(user, data):
+        return BaseResponse(base_customer=user, data=data).method_not_allowed()
 
     @mod_user.route('/', methods=['POST'])
-    @BaseDecorator.validate_token
     @BaseDecorator.system
-    def post(data, user):
-        return BaseResponse().method_not_allowed()
+    @BaseDecorator.validate_token
+    def post(user, data):
+        return BaseResponse(base_customer=user, data=data).method_not_allowed()
 
     @mod_user.route('/<id>', methods=['GET'])
-    @BaseDecorator.validate_token
     @BaseDecorator.system
-    def get(data, user, id):
+    @BaseDecorator.validate_token
+    def get(user, data, id):
         return ControlerUser(base_customer=user, data=data).get(model_id=id)
 
     @mod_user.route('/<id>', methods=['PUT'])
-    @BaseDecorator.validate_token
     @BaseDecorator.system
-    def put(data, user, id):
-        return BaseResponse().method_not_allowed()
+    @BaseDecorator.validate_token
+    def put(user, data, id):
+        return BaseResponse(base_customer=user, data=data).method_not_allowed()
