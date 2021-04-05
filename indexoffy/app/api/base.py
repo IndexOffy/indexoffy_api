@@ -46,6 +46,8 @@ class BaseApi(object):
                 return self.response.successfully_fetched(result=result, limit=request_limit, quantity=len(result))
         except:
             return self.response.server_error()
+        
+        return self.response.successfully_fetched()
 
     def get(self, model_id):
         """ Method GET

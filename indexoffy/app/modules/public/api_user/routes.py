@@ -21,7 +21,7 @@ class ViewUser(object):
     @BaseDecorator.system
     @BaseDecorator.validate_token
     def get_all(user, data):
-        return BaseResponse(base_customer=user, data=data).method_not_allowed()
+        return ControlerUser(base_customer=user, data=data).get_all()
 
     @mod_user.route('/', methods=['POST'])
     @BaseDecorator.system
@@ -33,7 +33,7 @@ class ViewUser(object):
     @BaseDecorator.system
     @BaseDecorator.validate_token
     def get(user, data, id):
-        return ControlerUser(base_customer=user, data=data).get(model_id=id)
+        return BaseResponse(base_customer=user, data=data).method_not_allowed()
 
     @mod_user.route('/<id>', methods=['PUT'])
     @BaseDecorator.system
