@@ -64,9 +64,11 @@ class BaseApi(object):
 
         return self.response.data_not_found()
 
-    def put(self, model_id):
+    def put(self, model_id, data=None):
         """ Method PUT
         """
+        # body => Request API / data => System
+        base_data = data if data else self.data['body']
         model_data = self.model_class.query.get(model_id)
 
         # Checks if there is a record.
@@ -74,12 +76,12 @@ class BaseApi(object):
             return self.response.user_dont_exist()
 
         # Check the contents of the registry.
-        if "id" in self.data['body']:
+        if "id" in base_data:
             return self.response.invalid_data()
 
         try:
-            for item in self.data['body']:
-                setattr(model_data, item, self.data['body'][item])
+            for item in base_data:
+                setattr(model_data, item, base_data[item])
             db.session.commit()
             result = self.base_schema.dump(model_data)
             return self.response.successfully_fetched(result=result)
@@ -87,11 +89,14 @@ class BaseApi(object):
             db.session.rollback()
             return self.response.server_error()
 
-    def post(self):
+    def post(self, data=None):
         """ Method POST
         """
+        # body => Request API / data => System
+        base_data = data if data else self.data['body']
+
         try:
-            base_data = self.model_class(**self.data['body'])
+            base_data = self.model_class(**base_data)
             db.session.add(base_data)
             db.session.commit()
             result = self.base_schema.dump(base_data)
