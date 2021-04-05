@@ -29,6 +29,69 @@ class BaseResponse(object):
 
         self.base_log_data = base_log_data
 
+        self.data_return = {
+            "successfully_fetched": {
+                "status": 201,
+                "status_message": "success",
+                "message": "Successful Fetched"
+                },
+            "successfully_created": {
+                "status": 201,
+                "status_message": "success",
+                "message": "Successful Created"
+                },
+            "server_error": {
+                "status": 500,
+                "status_message": "fail",
+                "message": "Internal Server Error"
+                },
+            "user_dont_exist": {
+                "status": 404,
+                "status_message": "fail",
+                "message": "User Don't Exist"
+                },
+            "base_customer_is_missing": {
+                "status": 401,
+                "status_message": "fail",
+                "message": "BaseCustomer is Missing"
+                },
+            "token_is_missing": {
+                "status": 401,
+                "status_message": "fail",
+                "message": "Token is Missing"
+                },
+            "token_is_invalid": {
+                "status": 401,
+                "status_message": "fail",
+                "message": "Token is Invalid"
+                },
+            "permission_denied": {
+                "status": 401,
+                "status_message": "fail",
+                "message": "Permission Denied"
+                },
+            "invalid_data": {
+                "status": 422,
+                "status_message": "fail",
+                "message": "Unprocessable Entity"
+                },
+            "data_not_found": {
+                "status": 404,
+                "status_message": "fail",
+                "message": "Not Found"
+                },
+            "method_not_allowed": {
+                "status": 405,
+                "status_message": "fail",
+                "message": "Method Not Allowed"
+                },
+            "method": {
+                "status": 200,
+                "status_message": "ok",
+                "message": "Method"
+                },
+        }
+
     def create_log(self):
         try:
             base_log = BaseLog(**self.base_log_data)
@@ -37,7 +100,31 @@ class BaseResponse(object):
         except Exception as error:
             db.session.rollback()
 
-    def successfully_fetched(self, result=None, params=None, limit=None, quantity=None):
+    def successfully_created(self, result=None, limit=None, quantity=None):
+        status = 201
+        status_message = "success"
+        message = "Successful Created"
+        try:
+            self.base_log_data["message"] = message
+            self.base_log_data["status"] = status
+            self.base_log_data['result'] = str(result)
+            self.create_log()
+        except Exception as error:
+            print(error)
+        finally:
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": result
+                }
+            ), status
+
+    def successfully_fetched(self, result=None, limit=None, quantity=None):
         status = 200
         status_message = "success"
         message = "Successful Request"
@@ -61,7 +148,7 @@ class BaseResponse(object):
                 }
             ), status
     
-    def server_error(self, result=None, params=None, limit=None, quantity=None):
+    def server_error(self, result=None, limit=None, quantity=None):
         status = 500
         status_message = "fail"
         message = "Internal Server Error"
@@ -83,7 +170,7 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def user_dont_exist(self, result=None, params=None, limit=None, quantity=None):
+    def user_dont_exist(self, result=None, limit=None, quantity=None):
         status = 404
         status_message = "fail"
         message = "User Don't Exist"
@@ -106,7 +193,7 @@ class BaseResponse(object):
                 }), status
 
 
-    def base_customer_is_missing(self, result=None, params=None, limit=None, quantity=None):
+    def base_customer_is_missing(self, result=None, limit=None, quantity=None):
         status = 401
         status_message = "fail"
         message = 'BaseCustomer is Missing'
@@ -128,7 +215,7 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def token_is_missing(self, result=None, params=None, limit=None, quantity=None):
+    def token_is_missing(self, result=None, limit=None, quantity=None):
         status = 401
         status_message = "fail"
         message = 'Token is Missing'
@@ -150,7 +237,7 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def token_is_invalid(self, result=None, params=None, limit=None, quantity=None):
+    def token_is_invalid(self, result=None, limit=None, quantity=None):
         status = 401
         status_message = "fail"
         message = 'Token is Invalid'
@@ -172,7 +259,7 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def permission_denied(self, result=None, params=None, limit=None, quantity=None):
+    def permission_denied(self, result=None, limit=None, quantity=None):
         status = 401
         status_message = "fail"
         message = "Permission Denied"
@@ -194,7 +281,7 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def invalid_data(self, result=None, params=None, limit=None, quantity=None):
+    def invalid_data(self, result=None, limit=None, quantity=None):
         status = 422
         status_message = "fail"
         message = "Unprocessable Entity"
@@ -216,7 +303,7 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def data_not_found(self, result=None, params=None, limit=None, quantity=None):
+    def data_not_found(self, result=None, limit=None, quantity=None):
         status = 404
         status_message = "fail"
         message = "Not Found"
@@ -238,7 +325,7 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def method_not_allowed(self, result=None, params=None, limit=None, quantity=None):
+    def method_not_allowed(self, result=None, limit=None, quantity=None):
         status = 405
         status_message = "fail"
         message = "Method Not Allowed"
@@ -259,3 +346,31 @@ class BaseResponse(object):
                     },
                     "result": None
                 }), status
+
+    def method(self, result=None, limit=None, quantity=None):
+        """
+        """
+        return self.create_response(
+            name="method",
+            result=result,
+            limit=limit,
+            quantity=quantity
+        )
+
+    def create_response(self, name, result=None, limit=None, quantity=None):
+        """
+        """
+        for item in self.data_return:
+            if item == name:
+                data_return = self.data_return[item]
+
+        return jsonify(
+            {
+                "data": {
+                    "status": data_return["status_message"],
+                    "message": data_return["message"],
+                    "limit": limit,
+                    "total": quantity
+                },
+                "result": result
+            }), data_return["status"]
