@@ -128,6 +128,28 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
+    def token_is_missing(self, result=None, params=None, limit=None, quantity=None):
+        status = 401
+        status_message = "fail"
+        message = 'Token is Missing'
+        try:
+            self.base_log_data["message"] = message
+            self.base_log_data["status"] = status
+            self.create_log()
+        except Exception as error:
+            print(error)
+        finally:
+            return jsonify(
+                {
+                    "data": {
+                        "status": status_message,
+                        "message": message,
+                        "limit": limit,
+                        "total": quantity
+                    },
+                    "result": None
+                }), status
+
     def token_is_invalid(self, result=None, params=None, limit=None, quantity=None):
         status = 401
         status_message = "fail"
