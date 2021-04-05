@@ -44,7 +44,7 @@ class BaseResponse(object):
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
-            self.base_log_data['result'] = result
+            self.base_log_data['result'] = str(result)
             self.create_log()
         except Exception as error:
             print(error)
