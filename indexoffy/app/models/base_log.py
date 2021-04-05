@@ -14,7 +14,7 @@ class BaseLog(Base):
     
     __tablename__ = 'base_log'
 
-    base_customer = db.Column(db.Integer, db.ForeignKey('base_customer.id'), nullable=False)
+    base_customer = db.Column(db.Integer, nullable=False)
     user_name = db.Column(db.String(100), nullable=True)
     user_email = db.Column(db.String(100), nullable=True)
     operation = db.Column(db.String(10), nullable=True)
