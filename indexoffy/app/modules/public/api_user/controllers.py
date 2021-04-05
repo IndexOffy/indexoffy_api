@@ -23,16 +23,29 @@ class ControlerUser(BaseApi):
             data=data
         )
 
-    def get(self, model_id=None):
+    def get_all(self):
+        """ Method GET All
+        """
+        # Adequacy of received parameters
+        for item in self.base_schema.fields:
+            option = self.data['params'].get(item)
+            if option:
+                if item == 'code':
+                    self.params[item] = option
+
+        if not self.params:
+            return self.response.successfully_fetched()
+
         try:
-            query = self.model_class.query \
-                .filter(
-                    self.model_class.id == model_id) \
-                .first()
-            if query:
-                result = self.base_schema.dump(query)
+            query_model = self.model_class.query
+            for item in self.params:
+                query_model = query_model.filter(getattr(self.model_class, item) == self.params[item])
+            query_model = query_model.first()
+
+            if query_model:
+                result = self.base_schema.dump(query_model)
                 return self.response.successfully_fetched(result=result, limit=1, quantity=1)
         except:
             return self.response.server_error()
-
-        return self.response.data_not_found()
+        
+        return self.response.successfully_fetched()
