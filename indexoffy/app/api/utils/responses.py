@@ -10,7 +10,7 @@ from app.models.base_log import BaseLog
 class BaseResponse(object):
     """ Base View to Response common to all Webservices.
     """
-    def __init__(self, base_customer=None, data=None, model_class=None, function=None):
+    def __init__(self, data=None, base_customer=None, model_class=None, function=None):
         """Constructor
         """
         base_log_data = BaseLog.default(self)
@@ -105,10 +105,11 @@ class BaseResponse(object):
                     "result": None
                 }), status
 
-    def token_is_missing(self, result=None, params=None, limit=None, quantity=None):
+
+    def base_customer_is_missing(self, result=None, params=None, limit=None, quantity=None):
         status = 401
         status_message = "fail"
-        message = 'Token is Missing'
+        message = 'BaseCustomer is Missing'
         try:
             self.base_log_data["message"] = message
             self.base_log_data["status"] = status
