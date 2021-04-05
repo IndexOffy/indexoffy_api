@@ -103,7 +103,7 @@ class BaseApi(object):
             db.session.commit()
             result = self.base_schema.dump(base_data)
 
-            return self.response.successfully_fetched(result=result)
+            return self.response.successfully_created(result=result)
         except Exception as error:
             db.session.rollback()
             return self.response.server_error()
