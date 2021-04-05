@@ -18,25 +18,25 @@ class ViewBaseCustomer(object):
         super().__init__()
 
     @mod_base_customer.route('/', methods=['GET'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def get_all(data, user):
+    @BaseDecorator.validate_token_system
+    def get_all(user, data):
         return ControlerBaseCustomer(data=data, base_customer=user).get_all()
 
     @mod_base_customer.route('/', methods=['POST'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def post(data, user):
+    @BaseDecorator.validate_token_system
+    def post(user, data):
         return ControlerBaseCustomer(data=data, base_customer=user).post()
 
     @mod_base_customer.route('/<id>', methods=['GET'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def get(data, user, id):
+    @BaseDecorator.validate_token_system
+    def get(user, data, id):
         return ControlerBaseCustomer(data=data, base_customer=user).get(model_id=id)
 
     @mod_base_customer.route('/<id>', methods=['PUT'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def put(data, user, id):
+    @BaseDecorator.validate_token_system
+    def put(user, data, id):
         return ControlerBaseCustomer(data=data, base_customer=user).put(model_id=id)

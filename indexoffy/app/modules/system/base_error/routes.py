@@ -17,25 +17,25 @@ class ViewBaseError(object):
         super().__init__()
 
     @mod_base_error.route('/', methods=['GET'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def get_all(data, user):
+    @BaseDecorator.validate_token_system
+    def get_all(user, data):
         return ControlerBaseError(data=data, base_customer=user).get_all()
 
     @mod_base_error.route('/', methods=['POST'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def post(data, user):
+    @BaseDecorator.validate_token_system
+    def post(user, data):
         return ControlerBaseError(base_customer=user, data=data).post()
 
     @mod_base_error.route('/<id>', methods=['GET'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def get(data, user, id):
+    @BaseDecorator.validate_token_system
+    def get(user, data, id):
         return ControlerBaseError(base_customer=user, data=data).get(model_id=id)
 
     @mod_base_error.route('/<id>', methods=['PUT'])
-    @BaseDecorator.validate_token_system
     @BaseDecorator.system
-    def put(data, user, id):
+    @BaseDecorator.validate_token_system
+    def put(user, data, id):
         return BaseResponse().method_not_allowed()
