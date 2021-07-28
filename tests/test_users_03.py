@@ -5,7 +5,7 @@ url = "http://api.indexoffy.com/users?id=1&email=email@indexoffy.com"
 
 payload={}
 headers = {
-  'access_token': '7779177864f70a4ec0f282ffcc8fd9ba'
+  'access_token': None
 }
 
 for item in range(25):
